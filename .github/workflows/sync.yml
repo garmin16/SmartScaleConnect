@@ -19,7 +19,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pydantic garth
+          pip install garth pydantic
 
       - name: Run SmartScaleConnect
         env:
@@ -28,5 +28,4 @@ jobs:
           XIAOMI_USERNAME: ${{ secrets.ZEPP_USERNAME }}
           XIAOMI_PASSWORD: ${{ secrets.ZEPP_PASSWORD }}
         run: |
-          cd src
           python -m smartscaleconnect --from xiaomi $XIAOMI_USERNAME $XIAOMI_PASSWORD --to garmin $GARMIN_USERNAME $GARMIN_PASSWORD
