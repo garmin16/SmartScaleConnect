@@ -17,16 +17,17 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install SmartScaleConnect
+      - name: Install dependencies
         run: |
           pip install garth pydantic requests
-          pip install ./smartscaleconnect
+          pip install . || pip install -e . || true
 
       - name: Run SmartScaleConnect
         env:
+          PYTHONPATH: ${{ github.workspace }}
           GARMIN_USERNAME: ${{ secrets.GARMIN_USERNAME }}
           GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
           XIAOMI_USERNAME: ${{ secrets.ZEPP_USERNAME }}
           XIAOMI_PASSWORD: ${{ secrets.ZEPP_PASSWORD }}
         run: |
-          smartscaleconnect --from xiaomi $XIAOMI_USERNAME $XIAOMI_PASSWORD --to garmin $GARMIN_USERNAME $GARMIN_PASSWORD
+          python -m pkg.smartscaleconnect --from xiaomi $XIAOMI_USERNAME $XIAOMI_PASSWORD --to garmin $GARMIN_USERNAME $GARMIN_PASSWORD || python -m smartscaleconnect --from xiaomi $XIAOMI_USERNAME $XIAOMI_PASSWORD --to garmin $GARMIN_USERNAME $GARMIN_PASSWORD
