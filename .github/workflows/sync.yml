@@ -19,13 +19,8 @@ jobs:
 
       - name: Build SmartScaleConnect
         run: |
-          go build -o smartscaleconnect main.go || go build -o smartscaleconnect ./cmd/smartscaleconnect/main.go || go build -o smartscaleconnect .
+          go build -o smartscaleconnect .
 
       - name: Run Sync
-        env:
-          GARMIN_USERNAME: ${{ secrets.GARMIN_USERNAME }}
-          GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
-          XIAOMI_USERNAME: ${{ secrets.ZEPP_USERNAME }}
-          XIAOMI_PASSWORD: ${{ secrets.ZEPP_PASSWORD }}
         run: |
-          ./smartscaleconnect --from xiaomi $XIAOMI_USERNAME $XIAOMI_PASSWORD --to garmin $GARMIN_USERNAME $GARMIN_PASSWORD
+          ./smartscaleconnect -c config.yml
