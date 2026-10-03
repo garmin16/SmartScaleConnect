@@ -1,7 +1,7 @@
 xiaomi:
-  username: "1581374619"
-  password: "Njvfc007rjylhf"
+  username: "${{ secrets.ZEPP_USERNAME }}"
+  password: "${{ secrets.ZEPP_PASSWORD }}"
 
 garmin:
-  username: "4835640@gmail.com"
-  password: "Njvfc007rj"
+  username: "${{ secrets.GARMIN_USERNAME }}"
+  password: "${{ secrets.GARMIN_PASSWORD }}"
