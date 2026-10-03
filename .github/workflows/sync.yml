@@ -21,6 +21,16 @@ jobs:
         run: |
           go build -o smartscaleconnect .
 
+      - name: Inject Secrets into Config
+        env:
+          GARMIN_USERNAME: ${{ secrets.GARMIN_USERNAME }}
+          GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
+          ZEPP_USERNAME: ${{ secrets.ZEPP_USERNAME }}
+          ZEPP_PASSWORD: ${{ secrets.ZEPP_PASSWORD }}
+        run: |
+          envsubst < config.yml > config_templated.yml
+          mv config_templated.yml config.yml
+
       - name: Run Sync
         run: |
           ./smartscaleconnect -c config.yml
