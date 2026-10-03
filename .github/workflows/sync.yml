@@ -17,6 +17,10 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Install SmartScaleConnect
+        run: |
+          pip install .
+
       - name: Run SmartScaleConnect
         env:
           GARMIN_USERNAME: ${{ secrets.GARMIN_USERNAME }}
@@ -24,4 +28,4 @@ jobs:
           XIAOMI_USERNAME: ${{ secrets.ZEPP_USERNAME }}
           XIAOMI_PASSWORD: ${{ secrets.ZEPP_PASSWORD }}
         run: |
-          python main.py --from xiaomi $XIAOMI_USERNAME $XIAOMI_PASSWORD --to garmin $GARMIN_USERNAME $GARMIN_PASSWORD
+          smartscaleconnect --from xiaomi $XIAOMI_USERNAME $XIAOMI_PASSWORD --to garmin $GARMIN_USERNAME $GARMIN_PASSWORD
