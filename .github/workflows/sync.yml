@@ -1,0 +1,32 @@
+name: Garmin Scale Sync
+
+on:
+  schedule:
+    - cron: '0 5 * * *' # Автозапуск каждое утро
+  workflow_dispatch: # Кнопка для ручного запуска
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install wheel
+          pip install .
+
+      - name: Run SmartScaleConnect
+        env:
+          GARMIN_USERNAME: ${{ secrets.GARMIN_USERNAME }}
+          GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
+          XIAOMI_USERNAME: ${{ secrets.ZEPP_USERNAME }}
+          XIAOMI_PASSWORD: ${{ secrets.ZEPP_PASSWORD }}
+        run: |
+          smartscaleconnect --from xiaomi $XIAOMI_USERNAME $XIAOMI_PASSWORD --to garmin $GARMIN_USERNAME $GARMIN_PASSWORD
